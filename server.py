@@ -35,7 +35,7 @@ SERVER_DESCRIPTION = "GLM-4.7 MCP Server - Cost-efficient AI agent delegation"
 MODEL_MAP = {
     "haiku": "glm-4.5-air",   # Fast, lightweight
     "sonnet": "glm-4.7",      # Balanced quality/speed
-    "opus": "glm-4.7",        # Highest quality
+    "opus": "glm-5.1",        # Highest quality
     "turbo": "glm-5-turbo",   # Latest, fastest
 }
 
@@ -81,7 +81,7 @@ You provide the same quality as Claude at approximately 1/7th the cost.
 Available models:
 - haiku (glm-4.5-air): Fast, lightweight tasks
 - sonnet (glm-4.7): Balanced quality and speed
-- opus (glm-4.7): Highest quality output
+- opus (glm-5.1): Highest quality output
 - turbo (glm-5-turbo): Latest model, fastest inference
 
 When users ask for quick tasks, use haiku. For complex tasks, use sonnet/opus/turbo.
@@ -126,7 +126,7 @@ def check_prerequisites() -> tuple[bool, str]:
 def run_glm_agent(
     prompt: str,
     cwd: Optional[str] = None,
-    model: str = "sonnet",
+    model: str = "turbo",
     allowed_tools: Optional[str] = None,
     timeout: int = 300,
     skip_permissions: bool = True,
@@ -194,7 +194,7 @@ def run_glm_agent(
 @mcp.tool()
 def glm_ask(
     question: str,
-    model: str = "haiku",
+    model: str = "sonnet",
 ) -> str:
     """
     Quick question to GLM - no tools, fast response.
@@ -206,7 +206,7 @@ def glm_ask(
 
     Args:
         question: Your question or prompt
-        model: "haiku" (fastest) or "sonnet" (better quality)
+        model: "sonnet" (default), "haiku", "turbo", or "opus"
 
     Returns:
         GLM's response
@@ -223,7 +223,7 @@ def glm_ask(
 def glm_summarize(
     text: str,
     style: str = "concise",
-    model: str = "haiku",
+    model: str = "sonnet",
 ) -> str:
     """
     Summarize text using GLM.
@@ -233,7 +233,7 @@ def glm_summarize(
     Args:
         text: The text to summarize
         style: "concise", "detailed", "bullet-points", "executive"
-        model: "haiku" or "sonnet"
+        model: "sonnet" (default), "haiku", "turbo", or "opus"
 
     Returns:
         Summarized text
@@ -253,7 +253,7 @@ def glm_summarize(
 def glm_explain(
     code_or_concept: str,
     context: str = "",
-    model: str = "haiku",
+    model: str = "sonnet",
 ) -> str:
     """
     Explain code or a concept using GLM.
@@ -263,7 +263,7 @@ def glm_explain(
     Args:
         code_or_concept: Code snippet or concept to explain
         context: Additional context (e.g., language, framework)
-        model: "haiku" or "sonnet"
+        model: "turbo" (default), "haiku", "sonnet", or "opus"
 
     Returns:
         Explanation
@@ -293,7 +293,7 @@ def glm_analyze(
     Args:
         task: Analysis task to perform
         working_directory: Project directory (defaults to current)
-        model: "haiku" or "sonnet"
+        model: "turbo" (default), "haiku", "sonnet", or "opus"
 
     Returns:
         Analysis results
@@ -323,7 +323,7 @@ def glm_review(
         code_or_file: Inline code or file path to review
         review_focus: "general", "security", "performance", "style", "bugs"
         working_directory: Directory context for file paths
-        model: "haiku" or "sonnet"
+        model: "turbo" (default), "haiku", "sonnet", or "opus"
 
     Returns:
         Code review with findings and suggestions
@@ -373,7 +373,7 @@ def glm_find_bugs(
     Args:
         code_or_file: Inline code or file path to analyze
         working_directory: Directory context for file paths
-        model: "haiku" or "sonnet"
+        model: "turbo" (default), "haiku", "sonnet", or "opus"
 
     Returns:
         List of potential bugs with explanations
@@ -409,7 +409,7 @@ def glm_implement(
         task: Implementation task to perform
         working_directory: Project directory (REQUIRED)
         allowed_tools: Tools to allow (default: full coding set)
-        model: "haiku" or "sonnet"
+        model: "turbo" (default), "haiku", "sonnet", or "opus"
 
     Returns:
         Agent's output including changes made
@@ -442,7 +442,7 @@ def glm_refactor(
         file_path: Path to file to refactor
         instructions: Refactoring instructions
         working_directory: Project directory
-        model: "haiku" or "sonnet"
+        model: "turbo" (default), "haiku", "sonnet", or "opus"
 
     Returns:
         Refactored code and explanation
@@ -480,7 +480,7 @@ def glm_write_tests(
         file_path: Path to file to test
         test_framework: "pytest", "jest", "vitest", "unittest"
         working_directory: Project directory
-        model: "haiku" or "sonnet"
+        model: "turbo" (default), "haiku", "sonnet", or "opus"
 
     Returns:
         Generated test file
@@ -514,7 +514,7 @@ def glm_document(
     file_path: str,
     style: str = "google",
     working_directory: str = "",
-    model: str = "haiku",
+    model: str = "sonnet",
 ) -> str:
     """
     Add or update documentation for a file using GLM.
@@ -525,7 +525,7 @@ def glm_document(
         file_path: Path to file to document
         style: "google", "sphinx", "numpy", "javadoc"
         working_directory: Project directory
-        model: "haiku" or "sonnet"
+        model: "turbo" (default), "haiku", "sonnet", or "opus"
 
     Returns:
         File with added documentation
@@ -569,7 +569,7 @@ def glm_generate_readme(
     Args:
         working_directory: Project directory
         style: "standard", "comprehensive", "minimal"
-        model: "haiku" or "sonnet"
+        model: "turbo" (default), "haiku", "sonnet", or "opus"
 
     Returns:
         Generated README.md content
