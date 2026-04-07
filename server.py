@@ -36,6 +36,7 @@ MODEL_MAP = {
     "haiku": "glm-4.5-air",   # Fast, lightweight
     "sonnet": "glm-4.7",      # Balanced quality/speed
     "opus": "glm-4.7",        # Highest quality
+    "turbo": "glm-5-turbo",   # Latest, fastest
 }
 
 # Cost comparison (approximate, per million tokens)
@@ -81,8 +82,9 @@ Available models:
 - haiku (glm-4.5-air): Fast, lightweight tasks
 - sonnet (glm-4.7): Balanced quality and speed
 - opus (glm-4.7): Highest quality output
+- turbo (glm-5-turbo): Latest model, fastest inference
 
-When users ask for quick tasks, use haiku. For complex tasks, use sonnet/opus.
+When users ask for quick tasks, use haiku. For complex tasks, use sonnet/opus/turbo.
 """
 )
 
@@ -630,6 +632,7 @@ def glm_status() -> str:
         f"  haiku  → {MODEL_MAP['haiku']} (fast, lightweight)",
         f"  sonnet → {MODEL_MAP['sonnet']} (balanced)",
         f"  opus   → {MODEL_MAP['opus']} (highest quality)",
+        f"  turbo  → {MODEL_MAP['turbo']} (latest, fastest)",
         "",
         "─── Cost Savings ───",
         f"  Claude Opus: ${COST_COMPARISON['claude_opus']}/M tokens",
